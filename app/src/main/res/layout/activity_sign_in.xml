@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signin.SignInActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCenter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/clBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/sign_in_up_img_size"
+            android:layout_height="@dimen/sign_in_up_img_size"
+            android:layout_marginBottom="@dimen/sign_in_up_img_margin"
+            app:layout_constraintBottom_toTopOf="@+id/etNickname"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/avatar_image_placeholder" />
+
+        <EditText
+            android:id="@+id/etNickname"
+            android:layout_width="@dimen/sign_in_up_et_width"
+            android:layout_height="@dimen/sign_in_up_et_height"
+            android:hint="@string/nickname_hint"
+            android:gravity="center"
+            android:background="@drawable/et_frame"
+            android:layout_margin="@dimen/sign_in_up_et_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatar"
+            app:layout_constraintBottom_toTopOf="@+id/etPassword">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="@dimen/sign_in_up_et_width"
+            android:layout_height="@dimen/sign_in_up_et_height"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="@string/password_hint"
+            android:gravity="center"
+            android:background="@drawable/et_frame"
+            android:layout_margin="@dimen/sign_in_up_et_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etNickname" />
+
+        <Button
+            android:id="@+id/btnSignIn"
+            android:layout_width="@dimen/sign_in_up_btn_width"
+            android:layout_height="@dimen/sign_in_up_btn_height"
+            android:layout_marginTop="@dimen/sign_in_btn_margin"
+            android:backgroundTint="@color/blue"
+            android:text="@string/sign_in"
+            android:textSize="@dimen/sign_in_up_btn_font_size"
+            android:layout_margin="@dimen/sign_in_btn_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_registered"
+            app:layout_constraintBottom_toTopOf="@+id/btnSignUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="@dimen/sign_in_up_btn_width"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="@string/sign_up"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/sign_in_up_btn_font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:strokeColor="@color/gray"
+            app:strokeWidth="@dimen/sign_up_btn_stroke_width" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

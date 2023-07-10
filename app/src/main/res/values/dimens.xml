@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sign_in_up_img_size">225dp</dimen>
+    <dimen name="sign_in_up_img_margin">30dp</dimen>
+    <dimen name="sign_in_up_et_height">48dp</dimen>
+    <dimen name="sign_in_up_et_width">350dp</dimen>
+    <dimen name="sign_in_up_et_margin">8dp</dimen>
+    <dimen name="sign_in_up_btn_height">48dp</dimen>
+    <dimen name="sign_in_up_btn_width">110dp</dimen>
+    <dimen name="sign_in_up_btn_font_size">16sp</dimen>
+    <dimen name="sign_in_btn_margin">15dp</dimen>
+    <dimen name="sign_up_btn_margin">12dp</dimen>
+    <dimen name="sign_in_up_btn_margin">5dp</dimen>
+    <dimen name="sign_up_btn_stroke_width">1dp</dimen>
+    <dimen name="sign_in_up_et_frame_radius">25dp</dimen>
+</resources>
