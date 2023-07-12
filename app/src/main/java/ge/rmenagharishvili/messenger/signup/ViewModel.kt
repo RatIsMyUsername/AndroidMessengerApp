@@ -1,7 +1,7 @@
 package ge.rmenagharishvili.messenger.signup
 
-class ViewModel(): androidx.lifecycle.ViewModel() {
+class ViewModel(private val repo: Repository): androidx.lifecycle.ViewModel() {
     fun registerNew(nickname: String, pass: String, occupation: String){
-        println(nickname)
+        repo.registerNew(nickname,pass,occupation)
     }
 }

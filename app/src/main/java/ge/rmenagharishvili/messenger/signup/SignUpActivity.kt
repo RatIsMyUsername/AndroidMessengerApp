@@ -1,5 +1,6 @@
 package ge.rmenagharishvili.messenger.signup
 
+import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +11,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
 
     private val viewModel: ViewModel by lazy {
-        ViewModelProvider(this, ViewModelsFactory())[ViewModel::class.java]
+        ViewModelProvider(this, ViewModelsFactory(application))[ViewModel::class.java]
     }
 
     companion object{
@@ -51,10 +52,10 @@ class SignUpActivity : AppCompatActivity() {
     }
 }
 
-class ViewModelsFactory : ViewModelProvider.Factory {
+class ViewModelsFactory(private val app: Application) : ViewModelProvider.Factory {
     override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ViewModel::class.java)) {
-            return ViewModel() as T
+            return ViewModel(Repository(app.applicationContext)) as T
         }
         throw IllegalArgumentException("no vm")
     }
