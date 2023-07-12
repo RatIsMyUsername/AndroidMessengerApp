@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ge.rmenagharishvili.messenger.databinding.ActivitySignUpBinding
-import ge.rmenagharishvili.messenger.fastToast
+import ge.rmenagharishvili.messenger.validFields
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -14,28 +14,7 @@ class SignUpActivity : AppCompatActivity() {
         ViewModelProvider(this, ViewModelsFactory(application))[ViewModel::class.java]
     }
 
-    companion object{
-        const val PASS_MIN_LENGTH = 6
-        const val MESSAGE_INVALID_PASS = "input at least "+ PASS_MIN_LENGTH + "chars for password"
-        const val MESSAGE_INVALID_NICKNAME = "you must have a nickname"
-        const val MESSAGE_INVALID_OCCUPATION = "you must have a job"
-    }
 
-    private fun validFields(nickname: String, pass: String, occupation: String): Boolean{
-        if(nickname.isEmpty()){
-            fastToast(this, MESSAGE_INVALID_NICKNAME)
-            return false
-        }
-        if(pass.length < PASS_MIN_LENGTH){
-            fastToast(this,MESSAGE_INVALID_PASS)
-            return false
-        }
-        if(occupation.isEmpty()){
-            fastToast(this, MESSAGE_INVALID_OCCUPATION)
-            return false
-        }
-        return true
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -45,7 +24,7 @@ class SignUpActivity : AppCompatActivity() {
             val nickname = binding.etNickname.text.toString()
             val pass = binding.etPassword.text.toString()
             val occupation = binding.etWhatIDo.text.toString()
-            if (validFields(nickname,pass,occupation)){
+            if (validFields(this, nickname,pass,occupation)){
                 viewModel.registerNew(nickname,pass,occupation)
             }
         }

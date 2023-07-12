@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // TODO: check if there is an user signed in
         if (true) {
-            // launch sign in activity if the user is signed in
+            // launch sign in(PROFILE) activity if the user is signed in
             val intent = Intent(this@MainActivity, SignInActivity::class.java)
             startActivity(intent)
         } else {
