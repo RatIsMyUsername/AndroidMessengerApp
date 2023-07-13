@@ -1,6 +1,5 @@
 package ge.rmenagharishvili.messenger.signin
 
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,16 +10,17 @@ import ge.rmenagharishvili.messenger.validFields
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
-
-    private val viewModel: ViewModel by lazy {
-        ViewModelProvider(this, ViewModelsFactory(application))[ViewModel::class.java]
-    }
+    private lateinit var viewModel: ViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        )[ViewModel::class.java]
 
         // start sign up activity if the user clicks the sign up button
         binding.btnSignUp.setOnClickListener {
@@ -35,14 +35,5 @@ class SignInActivity : AppCompatActivity() {
                 viewModel.login(nickname,pass)
             }
         }
-    }
-}
-
-class ViewModelsFactory(private val app: Application) : ViewModelProvider.Factory {
-    override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ViewModel::class.java)) {
-            return ViewModel(Repository(app.applicationContext)) as T
-        }
-        throw IllegalArgumentException("no vm")
     }
 }
