@@ -17,10 +17,12 @@ class MainActivity : AppCompatActivity() {
             // launch main page activity if the user is signed in
             val intent = Intent(this@MainActivity, MainPageActivity::class.java)
             startActivity(intent)
+            this.finish()
         } else {
             // launch sign in activity if the user is not signed in
             val intent = Intent(this@MainActivity, SignInActivity::class.java)
             startActivity(intent)
+            this.finish()
         }
         setContentView(R.layout.activity_main)
     }

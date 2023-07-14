@@ -6,4 +6,8 @@
     <string name="sign_in">SIGN IN</string>
     <string name="sign_up">SIGN UP</string>
     <string name="not_registered">Not registered?</string>
+    <string name="home">home</string>
+    <string name="settings">settings</string>
+    <string name="fab_description">FAB</string>
+    <string name="blank"></string>
 </resources>

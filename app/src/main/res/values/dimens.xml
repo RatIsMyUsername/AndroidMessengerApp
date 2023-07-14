@@ -13,4 +13,6 @@
     <dimen name="sign_in_up_btn_margin">5dp</dimen>
     <dimen name="sign_up_btn_stroke_width">1dp</dimen>
     <dimen name="sign_in_up_et_frame_radius">25dp</dimen>
+    <dimen name="fab_margin">4dp</dimen>
+    <dimen name="fab_radius">24dp</dimen>
 </resources>
