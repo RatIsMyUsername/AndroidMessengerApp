@@ -15,16 +15,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
             android:layout_width="@dimen/sign_in_up_img_size"
             android:layout_height="@dimen/sign_in_up_img_size"
             android:layout_marginBottom="@dimen/sign_in_up_img_margin"
+            android:src="@drawable/avatar_image_placeholder"
             app:layout_constraintBottom_toTopOf="@+id/etNickname"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/avatar_image_placeholder" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/etNickname"
