@@ -28,9 +28,9 @@
 
         <EditText
             android:id="@+id/etNickname"
-            android:layout_width="@dimen/sign_in_up_et_width"
-            android:layout_height="@dimen/sign_in_up_et_height"
-            android:layout_margin="@dimen/sign_in_up_et_margin"
+            android:layout_width="@dimen/et1_width"
+            android:layout_height="@dimen/et1_height"
+            android:layout_margin="@dimen/et1_margin"
             android:background="@drawable/et_frame"
             android:gravity="center"
             android:hint="@string/nickname_hint"
@@ -43,9 +43,9 @@
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="@dimen/sign_in_up_et_width"
-            android:layout_height="@dimen/sign_in_up_et_height"
-            android:layout_margin="@dimen/sign_in_up_et_margin"
+            android:layout_width="@dimen/et1_width"
+            android:layout_height="@dimen/et1_height"
+            android:layout_margin="@dimen/et1_margin"
             android:background="@drawable/et_frame"
             android:ems="10"
             android:gravity="center"
@@ -58,9 +58,9 @@
 
         <EditText
             android:id="@+id/etWhatIDo"
-            android:layout_width="@dimen/sign_in_up_et_width"
-            android:layout_height="@dimen/sign_in_up_et_height"
-            android:layout_margin="@dimen/sign_in_up_et_margin"
+            android:layout_width="@dimen/et1_width"
+            android:layout_height="@dimen/et1_height"
+            android:layout_margin="@dimen/et1_margin"
             android:background="@drawable/et_frame"
             android:gravity="center"
             android:hint="@string/what_i_do_hint"
@@ -74,12 +74,12 @@
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="@dimen/sign_in_up_btn_width"
-        android:layout_height="@dimen/sign_in_up_btn_height"
-        android:layout_margin="@dimen/sign_in_btn_margin"
+        android:layout_width="@dimen/btn1_width"
+        android:layout_height="@dimen/btn1_height"
+        android:layout_margin="@dimen/btn1_margin"
         android:backgroundTint="@color/blue"
         android:text="@string/sign_up"
-        android:textSize="@dimen/sign_in_up_btn_font_size"
+        android:textSize="@dimen/btn1_font_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
