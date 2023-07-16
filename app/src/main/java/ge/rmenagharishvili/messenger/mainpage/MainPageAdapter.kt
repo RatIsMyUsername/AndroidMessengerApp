@@ -15,7 +15,7 @@ class MainPageAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> HomeFragment()
-            1 -> SettingsFragment()
+            1 -> SettingsFragment.newInstance()
             else -> HomeFragment()
         }
     }
