@@ -2,8 +2,10 @@ package ge.rmenagharishvili.messenger.mainpage
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +13,18 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import ge.rmenagharishvili.messenger.R
 import ge.rmenagharishvili.messenger.databinding.FragmentSettingsBinding
+import ge.rmenagharishvili.messenger.fastToast
 import ge.rmenagharishvili.messenger.signin.SignInActivity
+import ge.rmenagharishvili.messenger.signup.Repository.Companion.CHILD_NAME_USERS
+import ge.rmenagharishvili.messenger.user.User
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,17 +39,26 @@ private const val ARG_PARAM2 = "param2"
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var storageReference: StorageReference
     private lateinit var pictureResultLauncher: ActivityResultLauncher<Intent>
+
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        pictureResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                // There are no request codes
-                onPictureSelected(result)
+        auth = FirebaseAuth.getInstance()
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+
+        pictureResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    // There are no request codes
+                    onPictureSelected(result)
+                }
             }
-        }
     }
 
     override fun onCreateView(
@@ -53,7 +73,36 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSettingsBinding.bind(view)
 
-        // TODO: get current user information and display it on this page
+        // get current user information and display it on this page
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val userReference = FirebaseDatabase.getInstance().reference.child(CHILD_NAME_USERS).child(currentUser.uid)
+            userReference.get().addOnSuccessListener { dataSnapshot ->
+                if (dataSnapshot.exists()) {
+                    // User data found
+                    val user = dataSnapshot.getValue(User::class.java)
+                    if (user != null) {
+                        val nickname = user.nickname
+                        val occupation = user.occupation
+
+                        binding.etNickname.setText(nickname)
+                        binding.etWhatIDo.setText(occupation)
+
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("Users/${currentUser.uid}")
+                        storageReference.downloadUrl.addOnSuccessListener { uri ->
+                            Picasso.get().load(uri).into(binding.ivProfilePicture)
+                        }.addOnFailureListener {
+                            fastToast(this.requireContext(), "Unable to load profile picture")
+                        }
+                    }
+                } else {
+                    fastToast(this.requireContext(), "User data not found")
+                }
+            }.addOnFailureListener {
+                fastToast(this.requireContext(), "Error displaying user data")
+            }
+        }
 
         // set on click listeners for user update information
         binding.ivProfilePicture.setOnClickListener { selectPicture() }
@@ -70,20 +119,52 @@ class SettingsFragment : Fragment() {
 
     private fun onPictureSelected(result: ActivityResult) {
         val data: Intent? = result.data
-        val selectedImage = data!!.data
-        binding.ivProfilePicture.setImageURI(selectedImage)
+        if (data == null) {
+            fastToast(this.requireContext(), "Image data is null")
+            return
+        }
+        val selectedImage = data.data
+        imageUri = selectedImage
+        binding.ivProfilePicture.setImageURI(imageUri)
     }
 
     private fun update() {
-        val nickname = binding.etNickname.text
-        val whatIDo = binding.etWhatIDo.text
+        // UID of the currently signed in user
+        val uid = auth.currentUser?.uid
 
-        // TODO: update user information based on what is provided on this page
+        // get the information from the fields
+        val nickname = binding.etNickname.text.toString()
+        val occupation = binding.etWhatIDo.text.toString()
+
+        val user = User(nickname, occupation)
+        // update user information based on what is provided on this page
+        if (uid != null) {
+            databaseReference.child(uid).setValue(user).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    updatePicture()
+                } else {
+                    fastToast(this.requireContext(), "Failed to update profile")
+                }
+            }
+        }
+    }
+
+    private fun updatePicture() {
+        if (imageUri != null) {
+            storageReference =
+                FirebaseStorage.getInstance().getReference("Users/${auth.currentUser?.uid}")
+            storageReference.putFile(imageUri!!).addOnSuccessListener {
+                fastToast(this.requireContext(), "Profile successfully updated")
+            }.addOnFailureListener {
+                Log.e(imageUri.toString(), it.toString())
+                fastToast(this.requireContext(), "Failed to upload profile picture")
+            }
+        }
     }
 
     private fun signOut() {
-        // TODO: sign out of the application
-
+        // sign out of the application
+        auth.signOut()
         // go back to the sign in page and finish this activity
         val intent = Intent(this.requireContext(), SignInActivity::class.java)
         startActivity(intent)
