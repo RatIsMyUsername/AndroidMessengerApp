@@ -11,3 +11,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Ignore Gradle cache and build directories
+.gradle/
+build/
