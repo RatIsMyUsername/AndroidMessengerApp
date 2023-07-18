@@ -4,8 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +23,12 @@ import com.squareup.picasso.Picasso
 import ge.rmenagharishvili.messenger.R
 import ge.rmenagharishvili.messenger.databinding.FragmentSettingsBinding
 import ge.rmenagharishvili.messenger.fastToast
+import ge.rmenagharishvili.messenger.hideLoadingProgressBar
+import ge.rmenagharishvili.messenger.showLoadingProgressBar
 import ge.rmenagharishvili.messenger.signin.SignInActivity
 import ge.rmenagharishvili.messenger.signup.Repository.Companion.CHILD_NAME_USERS
 import ge.rmenagharishvili.messenger.user.User
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -44,13 +46,15 @@ class SettingsFragment : Fragment() {
     private lateinit var storageReference: StorageReference
     private lateinit var pictureResultLauncher: ActivityResultLauncher<Intent>
 
+    private lateinit var handler: Handler
+
     private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        databaseReference = FirebaseDatabase.getInstance().reference.child(CHILD_NAME_USERS)
 
         pictureResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -72,12 +76,16 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSettingsBinding.bind(view)
+        handler = Handler(Looper.getMainLooper())
 
         // get current user information and display it on this page
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val userReference = FirebaseDatabase.getInstance().reference.child(CHILD_NAME_USERS).child(currentUser.uid)
+            handler.post { showLoadingProgressBar(this.requireContext()) }
+            val userReference = databaseReference.child(currentUser.uid)
             userReference.get().addOnSuccessListener { dataSnapshot ->
+                var listenerDone = false
+                var picLoaded = false
                 if (dataSnapshot.exists()) {
                     // User data found
                     val user = dataSnapshot.getValue(User::class.java)
@@ -92,15 +100,28 @@ class SettingsFragment : Fragment() {
                             FirebaseStorage.getInstance().reference.child("Users/${currentUser.uid}")
                         storageReference.downloadUrl.addOnSuccessListener { uri ->
                             Picasso.get().load(uri).into(binding.ivProfilePicture)
+                            picLoaded = true
+                            if (listenerDone) {
+                                handler.post { hideLoadingProgressBar() }
+                            }
                         }.addOnFailureListener {
                             fastToast(this.requireContext(), "Unable to load profile picture")
+                            picLoaded = true
+                            if (listenerDone) {
+                                handler.post { hideLoadingProgressBar() }
+                            }
                         }
                     }
                 } else {
                     fastToast(this.requireContext(), "User data not found")
                 }
+                listenerDone = true
+                if (picLoaded) {
+                    handler.post { hideLoadingProgressBar() }
+                }
             }.addOnFailureListener {
                 fastToast(this.requireContext(), "Error displaying user data")
+                handler.post { hideLoadingProgressBar() }
             }
         }
 
@@ -129,6 +150,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun update() {
+        handler.post { showLoadingProgressBar(this.requireContext()) }
         // UID of the currently signed in user
         val uid = auth.currentUser?.uid
 
@@ -144,6 +166,7 @@ class SettingsFragment : Fragment() {
                     updatePicture()
                 } else {
                     fastToast(this.requireContext(), "Failed to update profile")
+                    handler.post { hideLoadingProgressBar() }
                 }
             }
         }
@@ -155,10 +178,14 @@ class SettingsFragment : Fragment() {
                 FirebaseStorage.getInstance().getReference("Users/${auth.currentUser?.uid}")
             storageReference.putFile(imageUri!!).addOnSuccessListener {
                 fastToast(this.requireContext(), "Profile successfully updated")
+                handler.post { hideLoadingProgressBar() }
             }.addOnFailureListener {
-                Log.e(imageUri.toString(), it.toString())
                 fastToast(this.requireContext(), "Failed to upload profile picture")
+                handler.post { hideLoadingProgressBar() }
             }
+        } else {
+            fastToast(this.requireContext(), "Profile successfully updated")
+            handler.post { hideLoadingProgressBar() }
         }
     }
 
