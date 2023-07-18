@@ -1,14 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mainpage.SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="SETTINGS FRAGMENT" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/settings_component_offset"
+        app:layout_constraintBottom_toTopOf="@+id/clCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivProfilePicture"
+            android:layout_width="@dimen/settings_img_size"
+            android:layout_height="@dimen/settings_img_size"
+            android:src="@drawable/avatar_image_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCenter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/clBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clTop">
+
+        <EditText
+            android:id="@+id/etNickname"
+            android:layout_width="@dimen/et1_width"
+            android:layout_height="@dimen/et1_height"
+            android:layout_margin="@dimen/et1_margin"
+            android:background="@drawable/et_frame"
+            android:gravity="center"
+            android:hint="@string/nickname_hint"
+            app:layout_constraintBottom_toTopOf="@+id/etWhatIDo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/etWhatIDo"
+            android:layout_width="@dimen/et1_width"
+            android:layout_height="@dimen/et1_height"
+            android:layout_margin="@dimen/et1_margin"
+            android:background="@drawable/et_frame"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/what_i_do_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etNickname" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clCenter">
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="@dimen/btn1_width"
+            android:layout_height="@dimen/btn1_height"
+            android:layout_margin="@dimen/btn1_margin"
+            android:backgroundTint="@color/blue"
+            android:text="@string/update"
+            android:textSize="@dimen/btn1_font_size"
+            app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="@dimen/btn1_width"
+            android:layout_height="@dimen/btn1_height"
+            android:backgroundTint="@color/white"
+            android:text="@string/sign_out"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/btn1_font_size"
+            app:strokeColor="@color/gray"
+            app:strokeWidth="@dimen/btn2_stroke_width"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUpdate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

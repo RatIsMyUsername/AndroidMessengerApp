@@ -6,7 +6,7 @@
     <dimen name="et1_width">350dp</dimen>
     <dimen name="et1_margin">8dp</dimen>
     <dimen name="btn1_height">48dp</dimen>
-    <dimen name="btn1_width">110dp</dimen>
+    <dimen name="btn1_width">130dp</dimen>
     <dimen name="btn1_font_size">16sp</dimen>
     <dimen name="btn1_margin">15dp</dimen>
     <dimen name="sign_up_btn_margin">12dp</dimen>
@@ -16,5 +16,8 @@
     <dimen name="fab_margin">4dp</dimen>
     <dimen name="fab_radius">24dp</dimen>
     <dimen name="settings_img_size">225dp</dimen>
-    <dimen name="settings_component_offset">20dp</dimen>
+    <dimen name="settings_component_offset">40dp</dimen>
+    <dimen name="wait_text_size">20sp</dimen>
+    <dimen name="progress_bar_size">50dp</dimen>
+    <dimen name="progress_bar_margin">10dp</dimen>
 </resources>
