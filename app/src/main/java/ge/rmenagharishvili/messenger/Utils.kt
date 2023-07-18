@@ -18,7 +18,7 @@ fun fastToast(context: Context, message: String) {
 }
 
 fun getMail(nickname: String): String {
-    return "$nickname@coldmail.com"
+    return "$nickname@coldmail.com".replace(" ", "+")
 }
 
 fun validFields(context: Context, nickname: String, pass: String, occupation: String?): Boolean {

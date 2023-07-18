@@ -20,11 +20,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
-import ge.rmenagharishvili.messenger.R
+import ge.rmenagharishvili.messenger.*
 import ge.rmenagharishvili.messenger.databinding.FragmentSettingsBinding
-import ge.rmenagharishvili.messenger.fastToast
-import ge.rmenagharishvili.messenger.hideLoadingProgressBar
-import ge.rmenagharishvili.messenger.showLoadingProgressBar
 import ge.rmenagharishvili.messenger.signin.SignInActivity
 import ge.rmenagharishvili.messenger.signup.Repository.Companion.CHILD_NAME_USERS
 import ge.rmenagharishvili.messenger.user.User
@@ -114,6 +111,7 @@ class SettingsFragment : Fragment() {
                     }
                 } else {
                     fastToast(this.requireContext(), "User data not found")
+                    handler.post { hideLoadingProgressBar() }
                 }
                 listenerDone = true
                 if (picLoaded) {
@@ -158,11 +156,17 @@ class SettingsFragment : Fragment() {
         val nickname = binding.etNickname.text.toString()
         val occupation = binding.etWhatIDo.text.toString()
 
+        if (!validFields(this.requireContext(), nickname, "passable_password", occupation)) {
+            handler.post { hideLoadingProgressBar() }
+            return
+        }
+
         val user = User(nickname, occupation)
         // update user information based on what is provided on this page
         if (uid != null) {
             databaseReference.child(uid).setValue(user).addOnCompleteListener {
                 if (it.isSuccessful) {
+                    updateEmail(user.nickname!!)
                     updatePicture()
                 } else {
                     fastToast(this.requireContext(), "Failed to update profile")
@@ -170,6 +174,11 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun updateEmail(nickname: String) {
+        val user = auth.currentUser
+        user?.updateEmail(getMail(nickname))
     }
 
     private fun updatePicture() {

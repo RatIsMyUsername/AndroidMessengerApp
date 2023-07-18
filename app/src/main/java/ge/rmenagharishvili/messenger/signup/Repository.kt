@@ -35,24 +35,37 @@ class Repository(private val context: Context) {
     }
 
 
-    private fun postRegistration(nickname: String, occupation: String){
-        dbRoot.child(CHILD_NAME_USERS).child(authService.currentUser!!.uid).setValue(User(nickname=nickname,occupation=occupation)).addOnCompleteListener {
+    private fun postRegistration(nickname: String, occupation: String, callback: (Unit) -> Unit) {
+        dbRoot.child(CHILD_NAME_USERS).child(authService.currentUser!!.uid)
+            .setValue(User(nickname = nickname, occupation = occupation)).addOnCompleteListener {
             fastToast(context, "user successfully registered")
-        }.addOnFailureListener { fastToast(context, "server error 2"); Log.e("server error 2",it.toString()) }
+            callback(Unit)
+        }.addOnFailureListener {
+            fastToast(context, "server error 2"); Log.e(
+            "server error 2",
+            it.toString()
+        )
+        }
     }
 
-    fun registerNew(nickname: String, pass: String, occupation: String){
+    fun registerNew(nickname: String, pass: String, occupation: String, callback: (Unit) -> Unit) {
         checkIfUserExists(getMail(nickname)) { exists ->
             if (exists) {
-                fastToast(context,"user with given nickname already exists")
+                fastToast(context, "user with given nickname already exists")
             } else {
-                authService.createUserWithEmailAndPassword(getMail(nickname),pass).addOnCompleteListener{
-                    if(it.isSuccessful){
-                        postRegistration(nickname,occupation)
-                    }else{
-                        fastToast(context,"registration failed")
-                    }
-                }.addOnFailureListener { fastToast(context,"server error"); Log.e("server error", it.toString()) }
+                authService.createUserWithEmailAndPassword(getMail(nickname), pass)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            postRegistration(nickname, occupation, callback)
+                        } else {
+                            fastToast(context, "registration failed")
+                        }
+                    }.addOnFailureListener {
+                    fastToast(
+                        context,
+                        "server error"
+                    ); Log.e("server error", it.toString())
+                }
             }
         }
     }

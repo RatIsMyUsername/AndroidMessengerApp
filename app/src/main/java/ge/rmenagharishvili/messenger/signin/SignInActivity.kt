@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ge.rmenagharishvili.messenger.databinding.ActivitySignInBinding
+import ge.rmenagharishvili.messenger.mainpage.MainPageActivity
 import ge.rmenagharishvili.messenger.signup.SignUpActivity
 import ge.rmenagharishvili.messenger.validFields
 
@@ -32,8 +33,12 @@ class SignInActivity : AppCompatActivity() {
         binding.btnSignIn.setOnClickListener {
             val nickname = binding.etNickname.text.toString()
             val pass = binding.etPassword.text.toString()
-            if(validFields(this,nickname,pass,null)){
-                viewModel.login(nickname,pass)
+            if (validFields(this, nickname, pass, null)) {
+                viewModel.login(nickname, pass) {
+                    val intent = Intent(this@SignInActivity, MainPageActivity::class.java)
+                    startActivity(intent)
+                    this.finish()
+                }
             }
         }
     }
