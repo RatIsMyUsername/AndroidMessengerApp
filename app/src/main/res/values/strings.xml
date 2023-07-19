@@ -13,4 +13,6 @@
     <string name="fab_description">FAB</string>
     <string name="blank"></string>
     <string name="wait">Please wait…</string>
+    <string name="hint_search">Search</string>
+    <string name="go_back_desc">go back</string>
 </resources>
