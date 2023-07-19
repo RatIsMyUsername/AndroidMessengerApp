@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ge.rmenagharishvili.messenger.databinding.GlobalUsersBinding
+import ge.rmenagharishvili.messenger.fastToast
 import ge.rmenagharishvili.messenger.mainpage.MainPageActivity
 import kotlinx.coroutines.launch
 import ge.rmenagharishvili.messenger.user.User
@@ -87,6 +88,9 @@ class GlobalUsersActivity : AppCompatActivity(), CoroutineScope,GlobalUsersListe
         viewModel.getUsers(filter){ param: MutableList<User> ->
             adapter.users = param
             adapter.notifyDataSetChanged()
+            if(param.size == 0){
+                fastToast(application.applicationContext,"No user found with given filter")
+            }
         }
     }
 
