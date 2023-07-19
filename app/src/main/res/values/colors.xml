@@ -11,4 +11,5 @@
     <color name="blue">#0072fc</color>
     <color name="light_blue">#60b3f0</color>
     <color name="gray">#545454</color>
+    <color name="search_bar_bg">#d1dcfc</color>
 </resources>

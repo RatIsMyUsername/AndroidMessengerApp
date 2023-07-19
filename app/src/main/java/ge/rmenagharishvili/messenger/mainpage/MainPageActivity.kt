@@ -1,13 +1,14 @@
 package ge.rmenagharishvili.messenger.mainpage
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ge.rmenagharishvili.messenger.R
 import ge.rmenagharishvili.messenger.databinding.ActivityMainPageBinding
+import ge.rmenagharishvili.messenger.global_users.GlobalUsersActivity
 
 class MainPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainPageBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.supportActionBar?.hide()
@@ -18,6 +19,7 @@ class MainPageActivity : AppCompatActivity() {
         val adapter = MainPageAdapter(supportFragmentManager, lifecycle)
         pager.adapter = adapter
         pager.isUserInputEnabled = false
+
 
         binding.bottomNavBar.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -31,6 +33,12 @@ class MainPageActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        binding.floatingButton.setOnClickListener {
+            val intent = Intent(this@MainPageActivity, GlobalUsersActivity::class.java)
+            startActivity(intent)
+            this.finish()
         }
     }
 }
