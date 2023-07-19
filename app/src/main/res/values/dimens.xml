@@ -34,4 +34,5 @@
     <dimen name="job_margin_2">33dp</dimen>
     <dimen name="job_margin_bottom">16dp</dimen>
     <dimen name="pfp_single_left_margin">20dp</dimen>
+    <dimen name="single_user_top_margin">10dp</dimen>
 </resources>

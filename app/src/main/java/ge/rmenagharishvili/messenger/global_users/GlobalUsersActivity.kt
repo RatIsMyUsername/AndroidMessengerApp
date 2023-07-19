@@ -9,9 +9,10 @@ import ge.rmenagharishvili.messenger.mainpage.MainPageActivity
 import ge.rmenagharishvili.messenger.global_users.ViewModel
 import ge.rmenagharishvili.messenger.user.User
 
-class GlobalUsersActivity : AppCompatActivity(){
+class GlobalUsersActivity : AppCompatActivity(), GlobalUsersListener{
     private lateinit var binding: GlobalUsersBinding
-    private lateinit var viewModel: ViewModel
+    public lateinit var viewModel: ViewModel
+    private var adapter: Adapter = Adapter(this, mutableListOf<User>(),this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +21,13 @@ class GlobalUsersActivity : AppCompatActivity(){
         binding = GlobalUsersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.usersRc.adapter = adapter
+
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         )[ViewModel::class.java]
+
 
         binding.goBack.setOnClickListener {
             val intent = Intent(this@GlobalUsersActivity, MainPageActivity::class.java)
@@ -31,6 +35,14 @@ class GlobalUsersActivity : AppCompatActivity(){
             this.finish()
         }
 
-        viewModel.getUsers("rati"){ param: MutableList<User> -> println(param)}
+
+        viewModel.getUsers(""){ param: MutableList<User> ->
+            adapter.users = param
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    override fun onClickListener(user: User) {
+        println("TODO, start chatting with " + user.nickname)
     }
 }
