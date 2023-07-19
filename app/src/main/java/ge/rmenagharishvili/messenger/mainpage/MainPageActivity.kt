@@ -9,7 +9,6 @@ import ge.rmenagharishvili.messenger.global_users.GlobalUsersActivity
 
 class MainPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainPageBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.supportActionBar?.hide()
@@ -20,6 +19,7 @@ class MainPageActivity : AppCompatActivity() {
         val adapter = MainPageAdapter(supportFragmentManager, lifecycle)
         pager.adapter = adapter
         pager.isUserInputEnabled = false
+
 
         binding.bottomNavBar.setOnItemSelectedListener { item ->
             when (item.itemId) {

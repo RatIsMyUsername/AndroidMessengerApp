@@ -29,4 +29,9 @@
     <dimen name="editor_margin">10dp</dimen>
     <dimen name="editor_font_size">20sp</dimen>
     <dimen name="go_back_padding">5dp</dimen>
+    <dimen name="single_user_height">100dp</dimen>
+    <dimen name="single_text_size">25sp</dimen>
+    <dimen name="job_margin_2">33dp</dimen>
+    <dimen name="job_margin_bottom">16dp</dimen>
+    <dimen name="pfp_single_left_margin">20dp</dimen>
 </resources>

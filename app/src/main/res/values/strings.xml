@@ -15,4 +15,6 @@
     <string name="wait">Please wait…</string>
     <string name="hint_search">Search</string>
     <string name="go_back_desc">go back</string>
+    <string name="empty_user_text">example</string>
+    <string name="temp_job_text">temp job</string>
 </resources>
