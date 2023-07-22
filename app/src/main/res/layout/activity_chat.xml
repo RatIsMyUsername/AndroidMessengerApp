@@ -57,14 +57,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvNickname" />
 
-                <ImageView
-                    android:id="@+id/imageView2"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivUserPic"
                     android:layout_width="@dimen/chat_avatar_size"
                     android:layout_height="@dimen/chat_avatar_size"
+                    android:src="@drawable/avatar_image_placeholder"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/avatar_image_placeholder" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

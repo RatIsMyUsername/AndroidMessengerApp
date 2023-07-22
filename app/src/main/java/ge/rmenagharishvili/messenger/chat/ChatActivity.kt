@@ -40,9 +40,12 @@ class ChatActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
+
         val receiverNickname = intent.getStringExtra("nickname")
         val receiverId = intent.getStringExtra("uid")
         val receiverOccupation = intent.getStringExtra("occupation")
+
+        viewModel.loadPicture(receiverId!!, binding.ivUserPic)
 
         val senderId = viewModel.getCurrentUserId()
 

@@ -3,6 +3,9 @@ package ge.rmenagharishvili.messenger.chat
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 
 class Repository(private val context: Context) {
     private var authService: FirebaseAuth = FirebaseAuth.getInstance()
@@ -52,5 +55,13 @@ class Repository(private val context: Context) {
                     failCallback(Unit)
                 }
             })
+    }
+
+    fun loadPicture(uid: String, imageView: CircleImageView) {
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("Users/${uid}")
+        storageReference.downloadUrl.addOnSuccessListener { uri ->
+            Picasso.get().load(uri).into(imageView)
+        }.addOnFailureListener {}
     }
 }

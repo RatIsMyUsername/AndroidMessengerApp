@@ -2,6 +2,7 @@ package ge.rmenagharishvili.messenger.chat
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import de.hdodenhof.circleimageview.CircleImageView
 
 class ViewModel(application: Application) : AndroidViewModel(application) {
     private val repo: Repository
@@ -27,5 +28,9 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
         failCallback: (Unit) -> Unit
     ) {
         repo.updateMessageList(senderId, receiverId, messageList, successCallback, failCallback)
+    }
+
+    fun loadPicture(uid: String, imageView: CircleImageView) {
+        repo.loadPicture(uid, imageView)
     }
 }
