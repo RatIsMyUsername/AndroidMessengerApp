@@ -9,25 +9,25 @@ import androidx.lifecycle.ViewModelProvider
 import ge.rmenagharishvili.messenger.chat.ChatActivity
 import ge.rmenagharishvili.messenger.databinding.GlobalUsersBinding
 import ge.rmenagharishvili.messenger.fastToast
-import ge.rmenagharishvili.messenger.mainpage.MainPageActivity
-import kotlinx.coroutines.launch
 import ge.rmenagharishvili.messenger.user.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 
-class GlobalUsersActivity : AppCompatActivity(), CoroutineScope,GlobalUsersListener{
+class GlobalUsersActivity : AppCompatActivity(), CoroutineScope, GlobalUsersListener {
     private lateinit var binding: GlobalUsersBinding
     public lateinit var viewModel: ViewModel
-    private var adapter: Adapter = Adapter(this, mutableListOf<User>(),this)
+    private var adapter: Adapter = Adapter(this, mutableListOf<User>(), this)
 
 
-    companion object{
+    companion object {
         const val DEBOUNCE: Long = 300
         const val MIN_LENGTH: Int = 3
     }
+
     override fun onClickListener(user: User) {
         val intent = Intent(this@GlobalUsersActivity, ChatActivity::class.java)
         intent.putExtra("nickname", user.nickname)
@@ -55,15 +55,13 @@ class GlobalUsersActivity : AppCompatActivity(), CoroutineScope,GlobalUsersListe
 
 
         binding.goBack.setOnClickListener {
-            val intent = Intent(this@GlobalUsersActivity, MainPageActivity::class.java)
-            startActivity(intent)
-            this.finish()
+            onBackPressedDispatcher.onBackPressed()
         }
 
 
         fetchUsers("")
 
-        binding.searchField.addTextChangedListener(object: TextWatcher{
+        binding.searchField.addTextChangedListener(object : TextWatcher {
             private var latestVersion: String = ""
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -78,9 +76,9 @@ class GlobalUsersActivity : AppCompatActivity(), CoroutineScope,GlobalUsersListe
                 var filter = p0.toString()
                 filter = filter.trim()
                 latestVersion = filter
-                launch{
+                launch {
                     delay(DEBOUNCE)
-                    if(filter == latestVersion && (filter.length >= MIN_LENGTH || filter == "")){
+                    if (filter == latestVersion && (filter.length >= MIN_LENGTH || filter == "")) {
                         fetchUsers(filter)
                     }
                 }
@@ -89,12 +87,12 @@ class GlobalUsersActivity : AppCompatActivity(), CoroutineScope,GlobalUsersListe
         })
     }
 
-    private fun fetchUsers(filter: String){
-        viewModel.getUsers(filter){ param: MutableList<User> ->
+    private fun fetchUsers(filter: String) {
+        viewModel.getUsers(filter) { param: MutableList<User> ->
             adapter.users = param
             adapter.notifyDataSetChanged()
-            if(param.size == 0){
-                fastToast(application.applicationContext,"No user found with given filter")
+            if (param.size == 0) {
+                fastToast(application.applicationContext, "No user found with given filter")
             }
         }
     }

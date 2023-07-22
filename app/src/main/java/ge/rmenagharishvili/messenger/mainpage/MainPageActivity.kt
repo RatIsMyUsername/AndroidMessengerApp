@@ -37,7 +37,6 @@ class MainPageActivity : AppCompatActivity() {
         binding.floatingButton.setOnClickListener {
             val intent = Intent(this@MainPageActivity, GlobalUsersActivity::class.java)
             startActivity(intent)
-            this.finish()
         }
     }
 }
