@@ -8,6 +8,7 @@
         android:id="@+id/tvSendTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/send_time_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/clMessageHolder"
         app:layout_constraintTop_toTopOf="parent" />
