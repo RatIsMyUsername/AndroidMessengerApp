@@ -5,12 +5,12 @@
         android:id="@+id/home"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/home"
+        android:icon="@drawable/baseline_home_32"
         android:title="@string/home"/>
     <item
         android:id="@+id/settings"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/settings"
+        android:icon="@drawable/baseline_settings_32"
         android:title="@string/settings"/>
 </menu>
