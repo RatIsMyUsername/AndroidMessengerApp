@@ -1,10 +1,13 @@
 package ge.rmenagharishvili.messenger.signup
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import ge.rmenagharishvili.messenger.R
 import ge.rmenagharishvili.messenger.fastToast
 import ge.rmenagharishvili.messenger.getMail
 import ge.rmenagharishvili.messenger.user.User
@@ -38,6 +41,7 @@ class Repository(private val context: Context) {
     private fun postRegistration(nickname: String, occupation: String, callback: (Unit) -> Unit) {
         dbRoot.child(CHILD_NAME_USERS).child(authService.currentUser!!.uid)
             .setValue(User(nickname = nickname, occupation = occupation)).addOnCompleteListener {
+            uploadDefaultImage(authService.currentUser!!.uid)
             fastToast(context, "user successfully registered")
             callback(Unit)
         }.addOnFailureListener {
@@ -46,6 +50,12 @@ class Repository(private val context: Context) {
             it.toString()
         )
         }
+    }
+
+    private fun uploadDefaultImage(uid: String) {
+        val imageUri = Uri.parse("android.resource://${context.packageName}/${R.drawable.avatar_image_placeholder}")
+        val storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
+        storageReference.putFile(imageUri)
     }
 
     fun registerNew(nickname: String, pass: String, occupation: String, callback: (Unit) -> Unit) {
