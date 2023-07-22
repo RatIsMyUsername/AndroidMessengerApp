@@ -33,4 +33,6 @@
     <dimen name="chat_user_info_top_padding">12dp</dimen>
     <dimen name="message_text_size">16sp</dimen>
     <dimen name="message_bubble_corner_radius">150dp</dimen>
+    <dimen name="message_text_margin">24dp</dimen>
+    <dimen name="message_bubble_margin">12dp</dimen>
 </resources>

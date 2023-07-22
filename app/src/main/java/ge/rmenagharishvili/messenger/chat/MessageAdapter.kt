@@ -13,7 +13,7 @@ class MessageAdapter(
     val messageList: ArrayList<Message>,
     val viewModel: ViewModel
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -54,13 +54,13 @@ class MessageAdapter(
         return messageList.size
     }
 
-    class OutgoingViewHolder(val binding: OutgoingMessageBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class OutgoingViewHolder(binding: OutgoingMessageBinding) :
+        ViewHolder(binding.root) {
         val sentMessage = binding.tvMessage
     }
 
-    class IncomingViewHolder(val binding: IncomingMessageBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class IncomingViewHolder(binding: IncomingMessageBinding) :
+        ViewHolder(binding.root) {
         val receivedMessage = binding.tvMessage
     }
 

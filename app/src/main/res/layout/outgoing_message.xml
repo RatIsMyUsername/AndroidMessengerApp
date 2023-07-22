@@ -16,6 +16,7 @@
         android:id="@+id/clMessageHolder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/message_bubble_margin"
         android:background="@drawable/outgoing_message_bubble"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,8 +24,10 @@
 
         <TextView
             android:id="@+id/tvMessage"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/message_text_margin"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

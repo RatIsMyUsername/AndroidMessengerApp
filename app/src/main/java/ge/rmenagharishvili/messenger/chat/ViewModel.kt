@@ -10,12 +10,22 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
         repo = Repository(application.applicationContext)
     }
 
-    fun getCurrentUserId() : String? {
+    fun getCurrentUserId(): String? {
         return repo.getCurrentUserId()
     }
 
     fun sendMessage(senderId: String, receiverId: String, message: Message): Boolean {
         repo.sendMessage(senderId, receiverId, message)
         return true
+    }
+
+    fun updateMessageList(
+        senderId: String,
+        receiverId: String,
+        messageList: ArrayList<Message>,
+        successCallback: (Unit) -> Unit,
+        failCallback: (Unit) -> Unit
+    ) {
+        repo.updateMessageList(senderId, receiverId, messageList, successCallback, failCallback)
     }
 }

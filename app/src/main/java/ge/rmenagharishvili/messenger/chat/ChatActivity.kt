@@ -1,14 +1,15 @@
 package ge.rmenagharishvili.messenger.chat
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import ge.rmenagharishvili.messenger.R
+import ge.rmenagharishvili.messenger.*
 import ge.rmenagharishvili.messenger.databinding.ActivityChatBinding
-import ge.rmenagharishvili.messenger.timeInTimezoneMillis
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
@@ -17,6 +18,9 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageBox: EditText
     private lateinit var sendButton: ImageView
     private lateinit var messageAdapter: MessageAdapter
+
+    private lateinit var handler: Handler
+
 
     private lateinit var messageList: ArrayList<Message>
 
@@ -28,6 +32,7 @@ class ChatActivity : AppCompatActivity() {
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         )[ViewModel::class.java]
+        handler = Handler(Looper.getMainLooper())
 
         binding.toolbar.setNavigationIcon(R.drawable.baseline_chevron_left_36)
 
@@ -50,8 +55,21 @@ class ChatActivity : AppCompatActivity() {
 
         messageAdapter = MessageAdapter(this, messageList, viewModel)
 
-        // add data to RecyclerView
+        chatRV.adapter = messageAdapter
 
+        // add data to RecyclerView
+        handler.post { showLoadingProgressBar(this) }
+        viewModel.updateMessageList(senderId!!, receiverId!!, messageList, {
+            handler.post {
+                hideLoadingProgressBar()
+                messageAdapter.notifyDataSetChanged()
+            }
+        }, {
+            handler.post {
+                hideLoadingProgressBar()
+                fastToast(this, "Failed to load messages")
+            }
+        })
 
         // add the message to the database
         sendButton.setOnClickListener {
@@ -62,16 +80,12 @@ class ChatActivity : AppCompatActivity() {
                 timeInTimezoneMillis()
             )
 
-            senderId?.let { it1 ->
-                receiverId?.let { it2 ->
-                    if (viewModel.sendMessage(
-                            it1,
-                            it2, message
-                        )
-                    ) {
-                        messageBox.setText("")
-                    }
-                }
+            if (viewModel.sendMessage(
+                    senderId,
+                    receiverId, message
+                )
+            ) {
+                messageBox.setText("")
             }
 
         }
