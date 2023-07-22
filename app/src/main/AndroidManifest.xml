@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Messenger"
         tools:targetApi="31">
         <activity
+            android:name=".chat.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".mainpage.MainPageActivity"
             android:exported="false" />
         <activity
