@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import ge.rmenagharishvili.messenger.chat.ChatActivity
 import ge.rmenagharishvili.messenger.databinding.GlobalUsersBinding
 import ge.rmenagharishvili.messenger.fastToast
 import ge.rmenagharishvili.messenger.mainpage.MainPageActivity
@@ -28,7 +29,11 @@ class GlobalUsersActivity : AppCompatActivity(), CoroutineScope,GlobalUsersListe
         const val MIN_LENGTH: Int = 3
     }
     override fun onClickListener(user: User) {
-        println("TODO, start chatting with " + user.nickname)
+        val intent = Intent(this@GlobalUsersActivity, ChatActivity::class.java)
+        intent.putExtra("nickname", user.nickname)
+        intent.putExtra("uid", user.uid)
+        intent.putExtra("occupation", user.occupation)
+        startActivity(intent)
     }
 
     override val coroutineContext: CoroutineContext

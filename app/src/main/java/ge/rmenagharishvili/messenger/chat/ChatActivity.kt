@@ -42,10 +42,12 @@ class ChatActivity : AppCompatActivity() {
 
         val receiverNickname = intent.getStringExtra("nickname")
         val receiverId = intent.getStringExtra("uid")
+        val receiverOccupation = intent.getStringExtra("occupation")
 
         val senderId = viewModel.getCurrentUserId()
 
         binding.tvNickname.text = receiverNickname
+        binding.tvOccupation.text = receiverOccupation
 
         chatRV = binding.rvChat
         messageBox = binding.etMessage
