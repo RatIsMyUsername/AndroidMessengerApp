@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.Toast
+import java.util.*
 
 private const val PASS_MIN_LENGTH = 6
 private const val MESSAGE_INVALID_PASS = "input at least " + PASS_MIN_LENGTH + "chars for password"
@@ -48,4 +49,14 @@ fun showLoadingProgressBar(context: Context) {
 
 fun hideLoadingProgressBar() {
     loadingDialog.dismiss()
+}
+
+fun timeInTimezoneMillis(): Long {
+    return Calendar.getInstance(TimeZone.getDefault()).timeInMillis
+}
+
+fun hourAndMinuteFromMillis(timeInMillis: Long): String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = timeInMillis
+    return "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
 }
