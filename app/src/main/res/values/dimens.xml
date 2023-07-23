@@ -35,6 +35,7 @@
     <dimen name="message_bubble_corner_radius">150dp</dimen>
     <dimen name="message_text_margin">24dp</dimen>
     <dimen name="message_bubble_margin">12dp</dimen>
+    <dimen name="message_max_width">270dp</dimen>
     <dimen name="toolbar_height">100dp</dimen>
     <dimen name="goback_size">50dp</dimen>
     <dimen name="search_bar_height">55dp</dimen>

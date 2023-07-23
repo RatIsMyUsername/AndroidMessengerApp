@@ -58,5 +58,7 @@ fun timeInTimezoneMillis(): Long {
 fun hourAndMinuteFromMillis(timeInMillis: Long): String {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = timeInMillis
-    return "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
+    return "${
+        calendar.get(Calendar.HOUR_OF_DAY).toString().padStart(2, '0')
+    }:${calendar.get(Calendar.MINUTE).toString().padStart(2, '0')}"
 }
