@@ -30,11 +30,11 @@ class SignUpActivity : AppCompatActivity() {
         handler = Handler(Looper.getMainLooper())
 
         binding.btnSignUp.setOnClickListener {
-            handler.post { showLoadingProgressBar(this) }
             val nickname = binding.etNickname.text.toString()
             val pass = binding.etPassword.text.toString()
             val occupation = binding.etWhatIDo.text.toString()
             if (validFields(this, nickname, pass, occupation)) {
+                handler.post { showLoadingProgressBar(this) }
                 viewModel.registerNew(nickname, pass, occupation) {
                     handler.post { hideLoadingProgressBar() }
                     val intent = Intent(this@SignUpActivity, MainPageActivity::class.java)
