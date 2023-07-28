@@ -52,4 +52,5 @@
     <dimen name="pfp_single_left_margin">20dp</dimen>
     <dimen name="single_user_top_margin">10dp</dimen>
     <dimen name="send_time_margin">12dp</dimen>
+    <dimen name="chat_marg">70dp</dimen>
 </resources>
