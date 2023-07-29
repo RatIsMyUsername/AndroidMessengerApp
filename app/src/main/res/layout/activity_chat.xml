@@ -57,13 +57,13 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/chat_toolbar_height"
             android:background="@color/blue"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/chat_toolbar_height"
+                android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
@@ -71,52 +71,56 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin">
+                    app:layout_collapseMode="pin"
+                    android:layout_marginEnd="@dimen/btn1_margin"
+                    android:layout_gravity="bottom">
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/tvNickname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_nick"
+                                android:textSize="@dimen/chat_nickname_text_size"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvOccupation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_job"
+                                android:textSize="@dimen/chat_occupation_text_size" />
+                        </LinearLayout>
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ivUserPic"
+                            android:layout_width="@dimen/chat_avatar_size"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/avatar_image_placeholder"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.appcompat.widget.Toolbar>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/chat_user_info_margin"
-                    android:layout_marginTop="@dimen/chat_user_info_margin"
-                    android:layout_marginEnd="@dimen/chat_user_info_margin"
-                    android:layout_marginBottom="@dimen/chat_user_info_margin"
-                    android:paddingTop="@dimen/chat_user_info_top_padding"
-                    app:layout_collapseMode="parallax">
 
-
-                    <TextView
-                        android:id="@+id/tvNickname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/chat_nickname_text_size"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/tvOccupation"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvOccupation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/chat_occupation_text_size"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvNickname" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/ivUserPic"
-                        android:layout_width="@dimen/chat_avatar_size"
-                        android:layout_height="@dimen/chat_avatar_size"
-                        android:src="@drawable/avatar_image_placeholder"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView

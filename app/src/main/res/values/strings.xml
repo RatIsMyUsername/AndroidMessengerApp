@@ -18,4 +18,6 @@
     <string name="go_back_desc">go back</string>
     <string name="empty_user_text">example</string>
     <string name="temp_job_text">temp job</string>
+    <string name="empty_nick">empty_nick</string>
+    <string name="empty_job">empty_job</string>
 </resources>
