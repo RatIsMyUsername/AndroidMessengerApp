@@ -37,15 +37,17 @@ class SignInActivity : AppCompatActivity() {
         }
 
         binding.btnSignIn.setOnClickListener {
-            handler.post { showLoadingProgressBar(this) }
             val nickname = binding.etNickname.text.toString()
             val pass = binding.etPassword.text.toString()
             if (validFields(this, nickname, pass, null)) {
-                viewModel.login(nickname, pass) {
+                handler.post { showLoadingProgressBar(this) }
+                viewModel.login(nickname, pass) {it ->
                     handler.post { hideLoadingProgressBar() }
-                    val intent = Intent(this@SignInActivity, MainPageActivity::class.java)
-                    startActivity(intent)
-                    this.finish()
+                    if(it) {
+                        val intent = Intent(this@SignInActivity, MainPageActivity::class.java)
+                        startActivity(intent)
+                        this.finish()
+                    }
                 }
             }
         }

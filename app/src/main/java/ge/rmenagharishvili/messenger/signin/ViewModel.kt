@@ -11,7 +11,7 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
         repo = Repository(application.applicationContext)
     }
 
-    fun login(nickname: String, pass: String, callback: (Unit) -> Unit) {
+    fun login(nickname: String, pass: String, callback: (Boolean) -> Unit) {
         repo.login(nickname, pass, callback)
     }
 }

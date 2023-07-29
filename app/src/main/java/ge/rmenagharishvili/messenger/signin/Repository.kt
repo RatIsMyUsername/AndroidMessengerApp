@@ -16,12 +16,15 @@ class Repository(private val context: Context) {
         const val CHILD_NAME_USERS = "USERS"
     }
 
-    fun login(nickname: String, pass: String, callback: (Unit) -> Unit) {
+    fun login(nickname: String, pass: String, callback: (Boolean) -> Unit) {
         authService.signInWithEmailAndPassword(getMail(nickname), pass)
             .addOnSuccessListener {
                 fastToast(context, "login sucessful")
-                callback(Unit)
+                callback(true)
             }
-            .addOnFailureListener { fastToast(context, "login failed") }
+            .addOnFailureListener {
+                fastToast(context, "login failed")
+                callback(false)
+            }
     }
 }
