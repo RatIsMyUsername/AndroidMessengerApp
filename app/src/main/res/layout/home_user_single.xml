@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_entry_height"
+    android:layout_marginTop="@dimen/single_user_top_margin"
+    >
+
+    <TextView
+        android:id="@+id/single_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/single_text_size"
+        android:layout_marginStart="@dimen/btn1_margin"
+        app:layout_constraintStart_toEndOf="@+id/single_pfp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/empty_user_text" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/btn1_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/empty_user_text" />
+
+    <TextView
+        android:id="@+id/single_last_message"
+        android:layout_width="@dimen/last_message_textbox_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/btn1_margin"
+        android:maxLines="2"
+        android:ellipsize="end"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/single_pfp"
+        app:layout_constraintTop_toBottomOf="@+id/single_nickname"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintHorizontal_bias="0"
+        tools:text="hi, how is life, asdasdasdasdasasdasdasdasdasdasdasdasdasdasdasdasda" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/single_pfp"
+        android:src="@drawable/avatar_image_placeholder"
+        android:layout_width="@dimen/home_user_size"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="@dimen/home_user_size"
+        android:layout_marginStart="@dimen/pfp_single_left_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
