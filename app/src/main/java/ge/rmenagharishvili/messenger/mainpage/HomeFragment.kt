@@ -74,8 +74,6 @@ class HomeFragment : Fragment(), CoroutineScope, HomeUsersListener {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[ViewModel::class.java]
 
-        fetchUsers("")
-
         binding.searchField.addTextChangedListener(object : TextWatcher {
             private var latestVersion: String = ""
 
@@ -114,6 +112,10 @@ class HomeFragment : Fragment(), CoroutineScope, HomeUsersListener {
                 }
             }
         })
+
+        viewModel.setFriendsObserver(){
+            fetchUsers("")
+        }
     }
 
     private fun fetchUsers(filter: String) {
