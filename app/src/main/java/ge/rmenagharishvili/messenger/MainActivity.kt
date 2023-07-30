@@ -3,6 +3,7 @@ package ge.rmenagharishvili.messenger
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 import ge.rmenagharishvili.messenger.mainpage.MainPageActivity
 import ge.rmenagharishvili.messenger.signin.SignInActivity
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
     }
 }
