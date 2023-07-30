@@ -31,9 +31,11 @@
         android:id="@+id/clCenter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/settings_component_offset2"
         app:layout_constraintBottom_toTopOf="@+id/clBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@+id/clTop">
 
         <EditText
@@ -69,7 +71,6 @@
         android:id="@+id/clBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clCenter">

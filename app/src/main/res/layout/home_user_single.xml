@@ -8,18 +8,18 @@
     >
 
     <TextView
-        android:id="@+id/single_nickname"
+        android:id="@+id/home_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="@dimen/single_text_size"
         android:layout_marginStart="@dimen/btn1_margin"
-        app:layout_constraintStart_toEndOf="@+id/single_pfp"
+        app:layout_constraintStart_toEndOf="@+id/home_pfp"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/empty_user_text" />
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/home_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/btn1_margin"
@@ -28,23 +28,23 @@
         tools:text="@string/empty_user_text" />
 
     <TextView
-        android:id="@+id/single_last_message"
+        android:id="@+id/home_last_message"
         android:layout_width="@dimen/last_message_textbox_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/btn1_margin"
         android:maxLines="2"
         android:ellipsize="end"
 
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_home_msg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/single_pfp"
-        app:layout_constraintTop_toBottomOf="@+id/single_nickname"
+        app:layout_constraintStart_toEndOf="@+id/home_pfp"
+        app:layout_constraintTop_toBottomOf="@+id/home_nickname"
         app:layout_constraintVertical_bias="0.3"
         app:layout_constraintHorizontal_bias="0"
         tools:text="@string/temp_string_for_last_message" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/single_pfp"
+        android:id="@+id/home_pfp"
         android:src="@drawable/avatar_image_placeholder"
         android:layout_width="@dimen/home_user_size"
         app:layout_constraintStart_toStartOf="parent"

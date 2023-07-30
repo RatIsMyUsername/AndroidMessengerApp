@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import ge.rmenagharishvili.messenger.*
 import ge.rmenagharishvili.messenger.databinding.ActivityChatBinding
+import ge.rmenagharishvili.messenger.user.User
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
@@ -44,10 +45,17 @@ class ChatActivity : AppCompatActivity() {
         val receiverNickname = intent.getStringExtra("nickname")
         val receiverId = intent.getStringExtra("uid")
         val receiverOccupation = intent.getStringExtra("occupation")
+        val receiver = User(nickname = receiverNickname, occupation = receiverOccupation, uid = receiverId)
 
         viewModel.loadPicture(receiverId!!, binding.ivUserPic)
 
         val senderId = viewModel.getCurrentUserId()
+        var sender = User(uid=senderId)
+        viewModel.fillUser(senderId!!){
+            if(it!=null){
+                sender = it
+            }
+        }
 
         binding.tvNickname.text = receiverNickname
         binding.tvOccupation.text = receiverOccupation
@@ -68,6 +76,8 @@ class ChatActivity : AppCompatActivity() {
             handler.post {
                 hideLoadingProgressBar()
                 messageAdapter.notifyDataSetChanged()
+                chatRV.scrollToPosition(messageAdapter.itemCount - 1);
+                binding.appBar.setExpanded(false,true)
             }
         }, {
             handler.post {
@@ -86,8 +96,8 @@ class ChatActivity : AppCompatActivity() {
             )
 
             if (viewModel.sendMessage(
-                    senderId,
-                    receiverId, message
+                    sender,
+                    receiver, message
                 )
             ) {
                 messageBox.setText("")

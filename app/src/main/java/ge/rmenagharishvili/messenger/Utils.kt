@@ -4,12 +4,17 @@ import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.Toast
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 private const val PASS_MIN_LENGTH = 6
 private const val MESSAGE_INVALID_PASS = "input at least " + PASS_MIN_LENGTH + "chars for password"
 private const val MESSAGE_INVALID_NICKNAME = "you must have a nickname"
 private const val MESSAGE_INVALID_OCCUPATION = "you must have a job"
+
+const val DEBOUNCE: Long = 300
+const val MIN_LENGTH: Int = 3
 
 private lateinit var loadingDialog: Dialog
 
@@ -62,3 +67,22 @@ fun hourAndMinuteFromMillis(timeInMillis: Long): String {
         calendar.get(Calendar.HOUR_OF_DAY).toString().padStart(2, '0')
     }:${calendar.get(Calendar.MINUTE).toString().padStart(2, '0')}"
 }
+
+fun hourAndMinute2FromMillis(timeInMillis: Long): String {
+    val currentTimeInMillis = System.currentTimeMillis()
+    val timePassedInMillis = currentTimeInMillis - timeInMillis
+
+    val minutesPassed = TimeUnit.MILLISECONDS.toMinutes(timePassedInMillis)
+    val hoursPassed = TimeUnit.MILLISECONDS.toHours(timePassedInMillis)
+
+    return when {
+        minutesPassed < 60 -> "$minutesPassed minutes ago"
+        hoursPassed < 24 -> "$hoursPassed hours ago"
+        else -> {
+            val date = Date(timeInMillis)
+            val formatter = SimpleDateFormat("d MMM")
+            formatter.format(date)
+        }
+    }
+}
+

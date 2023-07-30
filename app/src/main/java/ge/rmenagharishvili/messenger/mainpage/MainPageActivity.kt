@@ -2,6 +2,7 @@ package ge.rmenagharishvili.messenger.mainpage
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ge.rmenagharishvili.messenger.R
 import ge.rmenagharishvili.messenger.databinding.ActivityMainPageBinding
@@ -38,5 +39,13 @@ class MainPageActivity : AppCompatActivity() {
             val intent = Intent(this@MainPageActivity, GlobalUsersActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun navbarVisible(){
+        binding.coordinator.visibility = View.VISIBLE
+    }
+
+    fun navbarInvisible(){
+        binding.coordinator.visibility = View.GONE
     }
 }

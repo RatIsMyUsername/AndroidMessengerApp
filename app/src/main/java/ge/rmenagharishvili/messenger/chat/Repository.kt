@@ -6,6 +6,8 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import ge.rmenagharishvili.messenger.user.Friend
+import ge.rmenagharishvili.messenger.user.User
 
 class Repository(private val context: Context) {
     private var authService: FirebaseAuth = FirebaseAuth.getInstance()
@@ -15,20 +17,26 @@ class Repository(private val context: Context) {
         const val CHILD_NAME_USERS = "USERS"
         const val CHILD_NAME_CHATS = "chats"
         const val CHILD_NAME_MESSAGES = "messages"
+        const val CHILD_NAME_FRIENDS = "Friends"
     }
 
     fun getCurrentUserId(): String? {
         return authService.currentUser?.uid
     }
 
-    fun sendMessage(senderId: String, receiverId: String, message: Message) {
+    fun sendMessage(sender: User, receiver: User, message: Message) {
+        val senderId = sender.uid!!
+        val receiverId = receiver.uid!!
         val senderRoom = senderId + receiverId
         val receiverRoom = receiverId + senderId
 
         dbRoot.child(CHILD_NAME_CHATS).child(senderRoom).child(CHILD_NAME_MESSAGES).push()
             .setValue(message).addOnSuccessListener {
                 dbRoot.child(CHILD_NAME_CHATS).child(receiverRoom).child(CHILD_NAME_MESSAGES).push()
-                    .setValue(message)
+                    .setValue(message).addOnSuccessListener {
+                        dbRoot.child(CHILD_NAME_FRIENDS).child(receiverId).child(senderId).setValue(Friend(nickname=sender.nickname, last_message = message.messageText, uid = senderId,occupation=sender.occupation, last_message_time = message.timeMillis))
+                        dbRoot.child(CHILD_NAME_FRIENDS).child(senderId).child(receiverId).setValue(Friend(nickname = receiver.nickname, last_message = message.messageText, uid = receiverId, occupation=receiver.occupation, last_message_time = message.timeMillis))
+                    }
             }
     }
 
@@ -63,5 +71,15 @@ class Repository(private val context: Context) {
         storageReference.downloadUrl.addOnSuccessListener { uri ->
             Picasso.get().load(uri).into(imageView)
         }.addOnFailureListener {}
+    }
+
+    fun fillUser(id: String, callback: (User?) -> Unit){
+        dbRoot.child(CHILD_NAME_USERS).child(id).get().addOnSuccessListener {
+            var user = it.getValue(User::class.java) as User
+            user.uid = id
+            callback(user)
+        }.addOnFailureListener {
+            callback(null)
+        }
     }
 }

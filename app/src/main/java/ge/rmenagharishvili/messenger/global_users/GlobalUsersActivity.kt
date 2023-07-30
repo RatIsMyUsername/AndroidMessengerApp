@@ -6,6 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import ge.rmenagharishvili.messenger.DEBOUNCE
+import ge.rmenagharishvili.messenger.MIN_LENGTH
 import ge.rmenagharishvili.messenger.chat.ChatActivity
 import ge.rmenagharishvili.messenger.databinding.GlobalUsersBinding
 import ge.rmenagharishvili.messenger.fastToast
@@ -21,12 +23,6 @@ class GlobalUsersActivity : AppCompatActivity(), CoroutineScope, GlobalUsersList
     private lateinit var binding: GlobalUsersBinding
     public lateinit var viewModel: ViewModel
     private var adapter: Adapter = Adapter(this, mutableListOf<User>(), this)
-
-
-    companion object {
-        const val DEBOUNCE: Long = 300
-        const val MIN_LENGTH: Int = 3
-    }
 
     override fun onClickListener(user: User) {
         val intent = Intent(this@GlobalUsersActivity, ChatActivity::class.java)

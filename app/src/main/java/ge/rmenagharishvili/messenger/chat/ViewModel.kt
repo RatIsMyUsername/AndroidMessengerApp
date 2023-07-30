@@ -3,6 +3,7 @@ package ge.rmenagharishvili.messenger.chat
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import de.hdodenhof.circleimageview.CircleImageView
+import ge.rmenagharishvili.messenger.user.User
 
 class ViewModel(application: Application) : AndroidViewModel(application) {
     private val repo: Repository
@@ -15,8 +16,14 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
         return repo.getCurrentUserId()
     }
 
-    fun sendMessage(senderId: String, receiverId: String, message: Message): Boolean {
-        repo.sendMessage(senderId, receiverId, message)
+    fun fillUser(id: String, callback: (User?) -> Unit){
+        repo.fillUser(id){
+            callback(it)
+        }
+    }
+
+    fun sendMessage(sender: User, receiver: User, message: Message): Boolean {
+        repo.sendMessage(sender, receiver, message)
         return true
     }
 
