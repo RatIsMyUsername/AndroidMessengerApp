@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/single_nickname"
         app:layout_constraintVertical_bias="0.3"
         app:layout_constraintHorizontal_bias="0"
-        tools:text="hi, how is life, asdasdasdasdasasdasdasdasdasdasdasdasdasdasdasdasda" />
+        tools:text="@string/temp_string_for_last_message" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/single_pfp"
